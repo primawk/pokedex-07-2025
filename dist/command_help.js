@@ -9,5 +9,5 @@ export function commandHelp(commands) {
     console.log(`Welcome to the Pokedex!
 Usage:
 
-${renderUsage(commands)}`);
+${renderUsage(commands.commands)}`);
 }

@@ -1,19 +1,14 @@
-import { createInterface } from "node:readline";
-import { stdin, stdout } from "node:process";
-import { getCommands } from "./cli_commands.js";
+import { State } from "./state.js";
 
 export function cleanInput(str: string) {
   return str.trim().toLowerCase().split(/\s+/);
 }
 
-export function startREPL() {
-  const rl = createInterface({
-    input: stdin,
-    output: stdout,
-    prompt: "Pokedex > ",
-  });
+export function startREPL(state: State) {
+  const rl = state.rl;
+  const commands = state.commands;
+
   rl.prompt();
-  const commands = getCommands();
   rl.on("line", (input) => {
     if (input.length === 0) {
       rl.prompt();
@@ -26,7 +21,7 @@ export function startREPL() {
       }
       if (input === command) {
         try {
-          commands[command].callback(commands);
+          commands[command].callback(state);
         } catch (error) {
           if (error instanceof Error) {
             console.log(`An error was thrown: ${error}`);

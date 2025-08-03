@@ -1,6 +1,6 @@
-import { CLICommand } from "./cli_commands";
+import { CLICommand, State } from "./state.js";
 
-export function commandHelp(commands: Record<string, CLICommand>) {
+export function commandHelp(commands: State) {
   function renderUsage(commands: Record<string, CLICommand>) {
     let result = "";
     for (const command in commands) {
@@ -12,5 +12,5 @@ export function commandHelp(commands: Record<string, CLICommand>) {
   console.log(`Welcome to the Pokedex!
 Usage:
 
-${renderUsage(commands)}`);
+${renderUsage(commands.commands)}`);
 }
