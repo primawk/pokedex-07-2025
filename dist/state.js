@@ -8,5 +8,6 @@ export function initState() {
         prompt: "Pokedex > ",
     });
     const commands = getCommands();
+    // const fetchLocations = fetchLocations()
     return { rl, commands };
 }
