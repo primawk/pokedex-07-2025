@@ -3,22 +3,10 @@ export class PokeAPI {
     constructor() { }
     async fetchLocations(pageURL) {
         const url = pageURL ?? `${PokeAPI.baseURL}/location-area`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
-            const result = await response.json();
-            return result;
-        }
-        catch (error) {
-            if (error instanceof Error) {
-                console.log(`An error was thrown: ${error}`);
-            }
-            else {
-                console.log("An unknown error occurred:", error);
-            }
-        }
+        const res = await fetch(url);
+        if (!res.ok)
+            throw new Error("Failed to fetch locations");
+        return res.json();
     }
     async fetchLocation(locationName) {
         return null;

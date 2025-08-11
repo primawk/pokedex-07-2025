@@ -1,7 +1,10 @@
 import { createInterface, type Interface } from "readline";
 import { stdin, stdout } from "node:process";
 import { getCommands } from "./cli_commands.js";
-import { ShallowLocations } from "./pokeapi.js";
+import { APIResponse } from "./pokeapi.js";
+import { PokeAPI } from "./pokeapi.js";
+
+const pokeAPI = new PokeAPI();
 
 export function initState(): State {
   const rl = createInterface({
@@ -10,18 +13,22 @@ export function initState(): State {
     prompt: "Pokedex > ",
   });
   const commands = getCommands();
-  // const fetchLocations = fetchLocations()
-  return { rl, commands };
+  const fnLocations = pokeAPI.fetchLocations;
+  let nextLocationsURL = "";
+  let prevLocationsURL = "";
+  return { rl, commands, fnLocations, nextLocationsURL, prevLocationsURL };
 }
 
 export type State = {
   rl: Interface;
   commands: Record<string, CLICommand>;
-  // fetchLocations: (pageURL: string) => Promise<ShallowLocations>;
+  fnLocations: (pageURL?: string) => Promise<APIResponse>;
+  nextLocationsURL: string;
+  prevLocationsURL: string;
 };
 
 export type CLICommand = {
   name: string;
   description: string;
-  callback: (state: State) => void;
+  callback: (state: State) => Promise<void>;
 };

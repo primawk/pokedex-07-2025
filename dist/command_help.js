@@ -1,4 +1,4 @@
-export function commandHelp(commands) {
+export async function commandHelp(commands) {
     function renderUsage(commands) {
         let result = "";
         for (const command in commands) {

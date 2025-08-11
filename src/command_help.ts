@@ -1,6 +1,6 @@
 import { CLICommand, State } from "./state.js";
 
-export function commandHelp(commands: State) {
+export async function commandHelp(commands: State) {
   function renderUsage(commands: Record<string, CLICommand>) {
     let result = "";
     for (const command in commands) {

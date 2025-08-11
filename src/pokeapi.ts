@@ -3,29 +3,24 @@ export class PokeAPI {
 
   constructor() {}
 
-  async fetchLocations(pageURL?: string) {
+  async fetchLocations(pageURL?: string): Promise<APIResponse> {
     const url = pageURL ?? `${PokeAPI.baseURL}/location-area`;
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error(`Response status: ${response.status}`);
-      }
-
-      const result = await response.json();
-      return result;
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        console.log(`An error was thrown: ${error}`);
-      } else {
-        console.log("An unknown error occurred:", error);
-      }
-    }
+    const res = await fetch(url);
+    if (!res.ok) throw new Error("Failed to fetch locations");
+    return res.json();
   }
 
   async fetchLocation(locationName: string) {
     return null;
   }
 }
+
+export type APIResponse = {
+  count: number;
+  next: string;
+  previous: string;
+  results: any[];
+};
 
 export type ShallowLocations = {
   id: number;
