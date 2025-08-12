@@ -1,24 +1,9 @@
 export function cleanInput(str) {
     return str.trim().toLowerCase().split(/\s+/);
 }
-export function startREPL(state) {
+export async function startREPL(state) {
     const rl = state.rl;
     const commands = state.commands;
-    async function loadLocations() {
-        try {
-            const data = await state.fnLocations();
-            console.log({ data });
-        }
-        catch (error) {
-            if (error instanceof Error) {
-                console.log(`An error was thrown: ${error}`);
-            }
-            else {
-                console.log("An unknown error occurred:", error);
-            }
-        }
-    }
-    loadLocations();
     rl.prompt();
     rl.on("line", (input) => {
         if (input.length === 0) {
@@ -42,8 +27,10 @@ export function startREPL(state) {
                         console.log("An unknown error occurred:", error);
                     }
                 }
+                finally {
+                    rl.prompt();
+                }
             }
         }
-        rl.prompt();
     });
 }

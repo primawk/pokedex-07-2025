@@ -1,9 +1,10 @@
-import { State } from "./state.js";
+import { State } from "./state";
 
-export async function commandMapb(state: State) {
-  if (!state?.prevLocationsURL) return console.log("you're on the first page");
+export async function commandMap(state: State) {
   try {
-    const data = await state.fnLocations(state?.prevLocationsURL);
+    const data = state?.nextLocationsURL
+      ? await state.fnLocations(state?.nextLocationsURL)
+      : await state.fnLocations();
     state.nextLocationsURL = data?.next;
     state.prevLocationsURL = data?.previous;
     console.log(data.results?.map((item) => item.name));
@@ -15,4 +16,5 @@ export async function commandMapb(state: State) {
       console.log("An unknown error occurred:", error);
     }
   }
+  return;
 }
