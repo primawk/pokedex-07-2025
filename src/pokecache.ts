@@ -10,6 +10,7 @@ export class Cache {
 
   constructor(interval: number) {
     this.#interval = interval;
+    this.#startReapLoop();
   }
 
   add<T>(key: string, val: T) {
@@ -34,6 +35,12 @@ export class Cache {
   }
 
   #startReapLoop() {
-    
+    const intervalId = setInterval(this.#reap, this.#interval);
+    this.#reapIntervalId = intervalId;
+  }
+
+  stopReapLoop() {
+    clearInterval(this.#reapIntervalId);
+    this.#reapIntervalId = undefined;
   }
 }
