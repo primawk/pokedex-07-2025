@@ -1,7 +1,10 @@
 import { State } from "./state.js";
 
 export async function commandMapb(state: State) {
-  if (!state?.prevLocationsURL) return console.log("you're on the first page");
+  if (!state?.prevLocationsURL) {
+    state.nextLocationsURL = "";
+    return console.log("you're on the first page");
+  }
   try {
     const data = await state.fnLocations(state?.prevLocationsURL);
     state.nextLocationsURL = data?.next;

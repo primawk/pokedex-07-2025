@@ -17,6 +17,7 @@ export async function startREPL(state: State) {
     for (const command in commands) {
       if (!(input in commands)) {
         console.log("unknown command");
+        rl.prompt();
         break;
       }
       if (input === command) {

@@ -1,12 +1,9 @@
-import { cache } from "./pokecache.js";
 export function cleanInput(str) {
     return str.trim().toLowerCase().split(/\s+/);
 }
 export async function startREPL(state) {
     const rl = state.rl;
     const commands = state.commands;
-    const cacheVar = new cache();
-    console.log(cacheVar.add());
     rl.prompt();
     rl.on("line", (input) => {
         if (input.length === 0) {
@@ -16,6 +13,7 @@ export async function startREPL(state) {
         for (const command in commands) {
             if (!(input in commands)) {
                 console.log("unknown command");
+                rl.prompt();
                 break;
             }
             if (input === command) {

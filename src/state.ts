@@ -13,7 +13,7 @@ export function initState(): State {
     prompt: "Pokedex > ",
   });
   const commands = getCommands();
-  const fnLocations = pokeAPI.fetchLocations;
+  const fnLocations = pokeAPI.fetchLocations.bind(pokeAPI);
   let nextLocationsURL = "";
   let prevLocationsURL = "";
   return { rl, commands, fnLocations, nextLocationsURL, prevLocationsURL };
