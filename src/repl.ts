@@ -15,8 +15,8 @@ export async function startREPL(state: State) {
       return;
     }
     for (const command in commands) {
+      // TO DO HOW TO WRITE ARGUMENTS
       if (!(input in commands)) {
-        //str.toLowerCase().includes("explore")
         console.log("unknown command");
         rl.prompt();
         break;
