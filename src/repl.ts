@@ -16,6 +16,7 @@ export async function startREPL(state: State) {
     }
     for (const command in commands) {
       if (!(input in commands)) {
+        //str.toLowerCase().includes("explore")
         console.log("unknown command");
         rl.prompt();
         break;

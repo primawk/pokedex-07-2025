@@ -14,15 +14,24 @@ export function initState(): State {
   });
   const commands = getCommands();
   const fnLocations = pokeAPI.fetchLocations.bind(pokeAPI);
+  const fnLocationAreas = pokeAPI.fetchLocationAreas.bind(pokeAPI);
   let nextLocationsURL = "";
   let prevLocationsURL = "";
-  return { rl, commands, fnLocations, nextLocationsURL, prevLocationsURL };
+  return {
+    rl,
+    commands,
+    fnLocations,
+    fnLocationAreas,
+    nextLocationsURL,
+    prevLocationsURL,
+  };
 }
 
 export type State = {
   rl: Interface;
   commands: Record<string, CLICommand>;
   fnLocations: (pageURL?: string) => Promise<APIResponse>;
+  fnLocationAreas: (locationName: string | number) => Promise<APIResponse>;
   nextLocationsURL: string;
   prevLocationsURL: string;
 };
@@ -30,5 +39,5 @@ export type State = {
 export type CLICommand = {
   name: string;
   description: string;
-  callback: (state: State) => Promise<void>;
+  callback: (state: State, ...args: string[]) => Promise<void>;
 };

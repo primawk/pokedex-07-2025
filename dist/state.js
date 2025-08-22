@@ -11,7 +11,15 @@ export function initState() {
     });
     const commands = getCommands();
     const fnLocations = pokeAPI.fetchLocations.bind(pokeAPI);
+    const fnLocationAreas = pokeAPI.fetchLocationAreas.bind(pokeAPI);
     let nextLocationsURL = "";
     let prevLocationsURL = "";
-    return { rl, commands, fnLocations, nextLocationsURL, prevLocationsURL };
+    return {
+        rl,
+        commands,
+        fnLocations,
+        fnLocationAreas,
+        nextLocationsURL,
+        prevLocationsURL,
+    };
 }

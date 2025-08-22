@@ -19,7 +19,11 @@ export class PokeAPI {
         this.#cache.add(url, val);
         return val;
     }
-    async fetchLocation(locationName) {
-        return null;
+    async fetchLocationAreas(locationName) {
+        const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
+        const res = await fetch(url);
+        if (!res.ok)
+            throw new Error("Failed to fetch locations");
+        return res.json();
     }
 }
