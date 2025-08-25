@@ -1,4 +1,5 @@
 import { State } from "./state.js";
+import { getAfterExplore } from "./utils.js";
 
 export function cleanInput(str: string) {
   return str.trim().toLowerCase().split(/\s+/);
@@ -15,15 +16,9 @@ export async function startREPL(state: State) {
       return;
     }
     for (const command in commands) {
-      // TO DO HOW TO WRITE ARGUMENTS
-      if (!(input in commands)) {
-        console.log("unknown command");
-        rl.prompt();
-        break;
-      }
-      if (input === command) {
+      if (/\bexplore\b/i.test(input)) {
         try {
-          commands[command].callback(state);
+          return commands["explore"].callback(state, getAfterExplore(input));
         } catch (error) {
           if (error instanceof Error) {
             console.log(`An error was thrown: ${error}`);
@@ -32,6 +27,25 @@ export async function startREPL(state: State) {
           }
         } finally {
           rl.prompt();
+        }
+      } else {
+        if (!(input in commands)) {
+          console.log("unknown command");
+          rl.prompt();
+          break;
+        }
+        if (input === command) {
+          try {
+            commands[command].callback(state);
+          } catch (error) {
+            if (error instanceof Error) {
+              console.log(`An error was thrown: ${error}`);
+            } else {
+              console.log("An unknown error occurred:", error);
+            }
+          } finally {
+            rl.prompt();
+          }
         }
       }
     }

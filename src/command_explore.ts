@@ -1,13 +1,27 @@
+import { PokemonList } from "./pokeapi";
 import { State } from "./state";
 
 export async function commandExplore(
   state: State,
   locationName: string | number
 ) {
+  function renderPokemons(pokemonList: PokemonList[]) {
+    let result = "";
+
+    for (const pokemon in pokemonList) {
+      result += `- ${pokemonList[pokemon]?.pokemon?.name}\n`;
+    }
+
+    return result;
+  }
   try {
     const data = await state.fnLocationAreas(locationName);
 
-    console.log(data.results?.map((item) => item.name));
+    console.log(`
+Exploring ${locationName}...
+Found Pokemon: 
+${renderPokemons(data?.pokemon_encounters)}`);
+
     state.rl.prompt();
   } catch (error) {
     if (error instanceof Error) {
