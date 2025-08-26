@@ -20,10 +20,20 @@ export class PokeAPI {
         return val;
     }
     async fetchLocationAreas(locationName) {
+        if (!locationName)
+            throw new Error("location name is required!");
         const url = `${PokeAPI.baseURL}/location-area/${locationName}`;
+        const cached = this.#cache.get(url);
+        if (cached) {
+            console.log("fetching from cached");
+            return cached.val;
+        }
         const res = await fetch(url);
         if (!res.ok)
-            throw new Error("Failed to fetch locations");
-        return res.json();
+            throw new Error("Failed to fetch location areas");
+        const val = await res.json();
+        this.#cache.add(url, val);
+        console.log("fetching from api");
+        return val;
     }
 }
