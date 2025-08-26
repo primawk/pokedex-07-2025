@@ -19,6 +19,21 @@ export class PokeAPI {
         this.#cache.add(url, val);
         return val;
     }
+    async catchPokemon(name) {
+        if (!name)
+            throw new Error("pokemon name is required!");
+        const url = `${PokeAPI.baseURL}/pokemon/${name}`;
+        const cached = this.#cache.get(url);
+        if (cached) {
+            return cached.val;
+        }
+        const res = await fetch(url);
+        if (!res.ok)
+            throw new Error("Failed to fetch locations");
+        const val = await res.json();
+        this.#cache.add(url, val);
+        return val;
+    }
     async fetchLocationAreas(locationName) {
         if (!locationName)
             throw new Error("location name is required!");

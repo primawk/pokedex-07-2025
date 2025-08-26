@@ -1,4 +1,5 @@
 import { Cache } from "./pokecache.js";
+import { APIResponse, PokemonResponse, ShallowLocations } from "./types.js";
 
 export class PokeAPI {
   private static readonly baseURL = "https://pokeapi.co/api/v2";
@@ -26,6 +27,24 @@ export class PokeAPI {
     return val;
   }
 
+  async catchPokemon(name: string): Promise<PokemonResponse> {
+    if (!name) throw new Error("pokemon name is required!");
+    const url = `${PokeAPI.baseURL}/pokemon/${name}`;
+
+    const cached = this.#cache.get<PokemonResponse>(url);
+
+    if (cached) {
+      return cached.val;
+    }
+    const res = await fetch(url);
+
+    if (!res.ok) throw new Error("Failed to fetch locations");
+    const val: PokemonResponse = await res.json();
+    this.#cache.add<PokemonResponse>(url, val);
+
+    return val;
+  }
+
   async fetchLocationAreas(
     locationName: string | number
   ): Promise<ShallowLocations> {
@@ -47,34 +66,3 @@ export class PokeAPI {
     return val;
   }
 }
-
-export type APIResponse = {
-  count: number;
-  next: string;
-  previous: string;
-  results: any[];
-};
-
-export type ShallowLocations = {
-  id: number;
-  name: string;
-  game_index: number;
-  encounter_method_rates: any;
-  location: Location;
-  names: any;
-  pokemon_encounters: PokemonList[];
-};
-
-export type PokemonList = {
-  pokemon: { name: string; url: string };
-  version_details: any;
-};
-
-export type Location = {
-  id: number;
-  name: string;
-  region: any;
-  names: any;
-  game_indices: any;
-  areas: any;
-};

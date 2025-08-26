@@ -3,6 +3,7 @@ import { commandHelp } from "./command_help.js";
 import { commandMap } from "./command_map.js";
 import { commandMapb } from "./command_mapb.js";
 import { commandExplore } from "./command_explore.js";
+import { commandCatch } from "./command_catch.js";
 export function getCommands() {
     return {
         exit: {
@@ -29,6 +30,11 @@ export function getCommands() {
             name: "explore",
             description: "see a list of all the Pokémon in a given area.",
             callback: commandExplore,
+        },
+        catch: {
+            name: "catch",
+            description: "try to catch a pokemon.",
+            callback: commandCatch,
         },
     };
 }

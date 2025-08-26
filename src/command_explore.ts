@@ -1,4 +1,4 @@
-import { PokemonList } from "./pokeapi";
+import { PokemonList } from "./types";
 import { State } from "./state";
 
 export async function commandExplore(

@@ -12,6 +12,7 @@ export function initState() {
     const commands = getCommands();
     const fnLocations = pokeAPI.fetchLocations.bind(pokeAPI);
     const fnLocationAreas = pokeAPI.fetchLocationAreas.bind(pokeAPI);
+    const fnCatchPokemon = pokeAPI.catchPokemon.bind(pokeAPI);
     let nextLocationsURL = "";
     let prevLocationsURL = "";
     return {
@@ -19,6 +20,7 @@ export function initState() {
         commands,
         fnLocations,
         fnLocationAreas,
+        fnCatchPokemon,
         nextLocationsURL,
         prevLocationsURL,
     };
