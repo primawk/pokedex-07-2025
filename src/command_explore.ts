@@ -1,5 +1,4 @@
-import { PokemonList } from "./types";
-import { State } from "./state";
+import { PokemonList, State } from "./types";
 
 export async function commandExplore(
   state: State,

@@ -1,7 +1,4 @@
-export type CacheEntry<T> = {
-  createdAt: number;
-  val: T;
-};
+import { CacheEntry } from "./types";
 
 export class Cache {
   #cache = new Map<string, CacheEntry<any>>();

@@ -15,6 +15,7 @@ export function initState() {
     const fnCatchPokemon = pokeAPI.catchPokemon.bind(pokeAPI);
     let nextLocationsURL = "";
     let prevLocationsURL = "";
+    let pokedex = {};
     return {
         rl,
         commands,
@@ -23,5 +24,6 @@ export function initState() {
         fnCatchPokemon,
         nextLocationsURL,
         prevLocationsURL,
+        pokedex,
     };
 }

@@ -1,4 +1,5 @@
-import { State } from "./state.js";
+import { State } from "./types";
+
 
 export async function commandMapb(state: State) {
   if (!state?.prevLocationsURL) {

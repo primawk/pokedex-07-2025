@@ -29,7 +29,7 @@ export class PokeAPI {
         }
         const res = await fetch(url);
         if (!res.ok)
-            throw new Error("Failed to fetch locations");
+            throw new Error("Failed to fetch pokemon");
         const val = await res.json();
         this.#cache.add(url, val);
         return val;

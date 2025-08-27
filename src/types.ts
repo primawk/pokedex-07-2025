@@ -1,3 +1,5 @@
+import { type Interface } from "readline";
+
 export type APIResponse = {
   count: number;
   next: string;
@@ -50,4 +52,26 @@ export type Location = {
   names: any;
   game_indices: any;
   areas: any;
+};
+
+export type CacheEntry<T> = {
+  createdAt: number;
+  val: T;
+};
+
+export type State = {
+  rl: Interface;
+  commands: Record<string, CLICommand>;
+  fnLocations: (pageURL?: string) => Promise<APIResponse>;
+  fnLocationAreas: (locationName: string | number) => Promise<ShallowLocations>;
+  fnCatchPokemon: (name: string) => Promise<PokemonResponse>;
+  nextLocationsURL: string;
+  prevLocationsURL: string;
+  pokedex: Record<string, PokemonResponse>;
+};
+
+export type CLICommand = {
+  name: string;
+  description: string;
+  callback: (state: State, ...args: string[]) => Promise<void>;
 };

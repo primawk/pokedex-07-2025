@@ -1,8 +1,8 @@
-import { createInterface, type Interface } from "readline";
+import { createInterface } from "readline";
 import { stdin, stdout } from "node:process";
 import { getCommands } from "./cli_commands.js";
 import { PokeAPI } from "./pokeapi.js";
-import { APIResponse, PokemonResponse, ShallowLocations } from "./types.js";
+import { State } from "./types.js";
 
 const pokeAPI = new PokeAPI();
 
@@ -18,6 +18,7 @@ export function initState(): State {
   const fnCatchPokemon = pokeAPI.catchPokemon.bind(pokeAPI);
   let nextLocationsURL = "";
   let prevLocationsURL = "";
+  let pokedex = {};
   return {
     rl,
     commands,
@@ -26,21 +27,6 @@ export function initState(): State {
     fnCatchPokemon,
     nextLocationsURL,
     prevLocationsURL,
+    pokedex,
   };
 }
-
-export type State = {
-  rl: Interface;
-  commands: Record<string, CLICommand>;
-  fnLocations: (pageURL?: string) => Promise<APIResponse>;
-  fnLocationAreas: (locationName: string | number) => Promise<ShallowLocations>;
-  fnCatchPokemon: (name: string) => Promise<PokemonResponse>;
-  nextLocationsURL: string;
-  prevLocationsURL: string;
-};
-
-export type CLICommand = {
-  name: string;
-  description: string;
-  callback: (state: State, ...args: string[]) => Promise<void>;
-};

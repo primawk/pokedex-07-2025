@@ -1,4 +1,4 @@
-import { CLICommand, State } from "./state.js";
+import { CLICommand, State } from "./types";
 
 export async function commandHelp(commands: State) {
   function renderUsage(commands: Record<string, CLICommand>) {

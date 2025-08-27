@@ -1,5 +1,5 @@
-import { State } from "./state.js";
-import { getAfterExplore } from "./utils.js";
+import { State } from "./types.js";
+import { getAfterCatch, getAfterExplore } from "./utils.js";
 
 export function cleanInput(str: string) {
   return str.trim().toLowerCase().split(/\s+/);
@@ -19,6 +19,18 @@ export async function startREPL(state: State) {
       if (/\bexplore\b/i.test(input)) {
         try {
           return commands["explore"].callback(state, getAfterExplore(input));
+        } catch (error) {
+          if (error instanceof Error) {
+            console.log(`An error was thrown: ${error}`);
+          } else {
+            console.log("An unknown error occurred:", error);
+          }
+        } finally {
+          rl.prompt();
+        }
+      } else if (/\bcatch\b/i.test(input)) {
+        try {
+          return commands["catch"].callback(state, getAfterCatch(input));
         } catch (error) {
           if (error instanceof Error) {
             console.log(`An error was thrown: ${error}`);
