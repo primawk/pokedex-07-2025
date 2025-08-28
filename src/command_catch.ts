@@ -7,6 +7,7 @@ export async function commandCatch(state: State, name: string) {
     const data = await state.fnCatchPokemon(name);
     // const catched = getRandomInt(data?.base_experience + 1);
     console.log(`${name} was caught!`);
+    console.log("You may now inspect it with the inspect command.");
     state.pokedex[name] = data;
   } catch (error) {
     if (error instanceof Error) {

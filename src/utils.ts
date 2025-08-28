@@ -8,6 +8,11 @@ export function getAfterCatch(command: string) {
   return match ? match[1].trim() : "";
 }
 
+export function getAfterInspect(command: string) {
+  const match = command.match(/\binspect\b\s*(.*)/i);
+  return match ? match[1].trim() : "";
+}
+
 export function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);
 }
